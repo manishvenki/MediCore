@@ -16,6 +16,8 @@ dist/
 build/
 **/build/
 dist-ssr/
+.vercel/
+**/.vercel/
 
 # Logs
 logs/

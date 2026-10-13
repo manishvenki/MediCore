@@ -3,36 +3,85 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 
 let mongoMemoryServer: MongoMemoryServer | null = null;
 
+/**
+ * Connect to MongoDB with connection reuse and serverless optimization.
+ * In serverless environments (Vercel), reuses existing warm connections
+ * and prevents memory server spawning in production.
+ */
 export const connectDB = async (): Promise<void> => {
+  // 1. Connection reuse check: if already connected, return immediately
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  // If currently in the process of connecting, wait for it
+  if (mongoose.connection.readyState === 2) {
+    console.log('MongoDB connection currently establishing, awaiting ready state...');
+    await new Promise((resolve) => {
+      mongoose.connection.once('connected', resolve);
+    });
+    return;
+  }
+
+  const isServerlessOrProd = Boolean(process.env.VERCEL || process.env.NODE_ENV === 'production');
   let uri = process.env.MONGODB_URI?.trim();
 
+  // 2. Primary connection attempt via MONGODB_URI
   if (uri && uri.length > 0) {
     try {
-      console.log(`Connecting to MongoDB at: ${uri} (db: medicore)...`);
-      await mongoose.connect(uri, { dbName: 'medicore' });
-      console.log('MongoDB connected successfully via configured MONGODB_URI.');
-      return;
-    } catch (primaryErr) {
-      console.warn(`Initial connection attempt to ${uri} failed:`, primaryErr);
+      const sanitizedUri = uri.replace(/\/\/([^:]+):([^@]+)@/, '//$1:****@');
+      console.log(`Connecting to MongoDB at: ${sanitizedUri} (db: medicore)...`);
 
-      // If localhost failed due to IPv6 resolution on Windows, retry with 127.0.0.1
-      if (uri.includes('localhost')) {
+      await mongoose.connect(uri, {
+        dbName: 'medicore',
+        serverSelectionTimeoutMS: 8000,
+        maxPoolSize: 10,
+      });
+
+      console.log('MongoDB connected successfully via MONGODB_URI.');
+      return;
+    } catch (primaryErr: any) {
+      console.warn('Initial connection attempt failed:', primaryErr?.message || primaryErr);
+
+      // Retry with IPv4 if localhost failed on Windows
+      if (uri.includes('localhost') && !isServerlessOrProd) {
         const ipv4Uri = uri.replace('localhost', '127.0.0.1');
         try {
           console.log(`Retrying connection with IPv4 (${ipv4Uri})...`);
-          await mongoose.connect(ipv4Uri, { dbName: 'medicore' });
+          await mongoose.connect(ipv4Uri, {
+            dbName: 'medicore',
+            serverSelectionTimeoutMS: 5000,
+            maxPoolSize: 10,
+          });
           console.log('MongoDB connected successfully via IPv4 127.0.0.1.');
           return;
-        } catch (ipv4Err) {
-          console.error('IPv4 connection also failed:', ipv4Err);
+        } catch (ipv4Err: any) {
+          console.error('IPv4 connection also failed:', ipv4Err?.message || ipv4Err);
         }
       }
+
+      // If running on Vercel or in production, do NOT attempt to spawn MongoMemoryServer
+      if (isServerlessOrProd) {
+        throw new Error(
+          `[MongoDB Atlas Error] Could not connect to MongoDB Atlas. ` +
+          `Please check: ` +
+          `1) MONGODB_URI is configured correctly in Vercel environment variables. ` +
+          `2) MongoDB Atlas Network Access has '0.0.0.0/0' (Allow access from anywhere) enabled. ` +
+          `3) Database user credentials and cluster status are active. ` +
+          `Details: ${primaryErr?.message || primaryErr}`
+        );
+      }
     }
+  } else if (isServerlessOrProd) {
+    throw new Error(
+      `[Configuration Error] MONGODB_URI environment variable is missing in Vercel production environment. ` +
+      `Please configure MONGODB_URI in your Vercel Project Settings > Environment Variables.`
+    );
   }
 
-  // Fallback if no MONGODB_URI or if local MongoDB is unreachable
+  // 3. Fallback for zero-config local development ONLY
   try {
-    console.log('Initializing embedded MongoDB engine (MongoMemoryServer)...');
+    console.log('Initializing embedded MongoDB engine (MongoMemoryServer) for local dev...');
     mongoMemoryServer = await MongoMemoryServer.create();
     const memoryUri = mongoMemoryServer.getUri();
     await mongoose.connect(memoryUri, { dbName: 'medicore' });
@@ -45,9 +94,12 @@ export const connectDB = async (): Promise<void> => {
 
 export const disconnectDB = async (): Promise<void> => {
   try {
-    await mongoose.disconnect();
+    if (mongoose.connection.readyState !== 0) {
+      await mongoose.disconnect();
+    }
     if (mongoMemoryServer) {
       await mongoMemoryServer.stop();
+      mongoMemoryServer = null;
     }
   } catch (error) {
     console.error('Error disconnecting MongoDB:', error);
