@@ -1,0 +1,29 @@
+{
+  "name": "medicore",
+  "version": "1.0.0",
+  "description": "MediCore - Healthcare Management Platform (Functional MVP Demo)",
+  "scripts": {
+    "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"blue.bold,green.bold\" \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "seed": "npm run seed --prefix server",
+    "build:client": "npm run build --prefix client",
+    "build:server": "npm run build --prefix server",
+    "build": "npm run build:server && npm run build:client",
+    "start": "run.bat"
+  },
+  "keywords": [
+    "healthcare",
+    "hospital-management",
+    "react",
+    "express",
+    "mongodb",
+    "typescript"
+  ],
+  "author": "MediCore Team",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "playwright": "^1.64.0"
+  }
+}
