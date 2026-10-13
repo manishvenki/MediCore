@@ -596,8 +596,8 @@ Before running MediCore, ensure your environment meets these runtime requirement
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/manishvenki/Portfolio1.git
-cd "The Demo Project"
+git clone https://github.com/manishvenki/MediCore.git
+cd MediCore
 ```
 
 ### 2. Install Dependencies
@@ -883,7 +883,7 @@ Contributions, issues, and feature requests are welcome! To contribute to MediCo
    ```bash
    git push origin feature/clinical-enhancement
    ```
-5. **Open a Pull Request**: Submit your pull request to the `master` branch with a clear description of changes.
+5. **Open a Pull Request**: Submit your pull request to the `main` branch with a clear description of changes.
 
 ---
 
@@ -895,7 +895,7 @@ This project is licensed under the **ISC License**. See the `package.json` speci
 ### Author & Engineering
 - **Project**: MediCore Healthcare Management Platform
 - **Lead Developer**: **Manish Venki** ([GitHub Profile](https://github.com/manishvenki))
-- **Repository**: [https://github.com/manishvenki/Portfolio1](https://github.com/manishvenki/Portfolio1)
+- **Repository**: [https://github.com/manishvenki/MediCore](https://github.com/manishvenki/MediCore)
 - **Built With**: React 19, TypeScript, Tailwind CSS, Express.js, MongoDB Atlas, Mongoose, and Playwright.
 
 ---
