@@ -7,7 +7,7 @@
 <p align="center">
   <strong>Next-Generation Clinical Operations, Patient Records, and Appointment Scheduling Platform</strong>
   <br />
-  <em>Engineered with React 19, Vite, TypeScript, Tailwind CSS, Express, MongoDB Atlas & MongoMemoryServer</em>
+  <em>Simplifying Healthcare Administration & Connecting Patients With Care Providers</em>
 </p>
 
 <p align="center">
@@ -20,7 +20,7 @@
   <a href="https://www.mongodb.com/"><img src="https://img.shields.io/badge/MongoDB-Atlas%20%7C%20Embedded-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" /></a>
   <a href="https://mongoosejs.com/"><img src="https://img.shields.io/badge/Mongoose-8.5-880000?style=for-the-badge&logo=mongoose&logoColor=white" alt="Mongoose" /></a>
   <a href="https://playwright.dev/"><img src="https://img.shields.io/badge/Playwright-E2E%20Automated-2EAD33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright" /></a>
-  <img src="https://img.shields.io/badge/License-ISC-blue?style=for-the-badge" alt="License ISC" />
+  <a href="https://github.com/manishvenki/MediCore/blob/main/package.json"><img src="https://img.shields.io/badge/License-ISC-blue?style=for-the-badge" alt="License ISC" /></a>
 </p>
 
 ---
@@ -28,14 +28,30 @@
 ## Quick Navigation
 
 - [Overview](#overview)
+  - [Vision & Purpose](#vision--purpose)
+  - [The Problem MediCore Solves](#the-problem-medicore-solves)
+  - [Target Users & Stakeholders](#target-users--stakeholders)
 - [Application Preview & Screenshots](#application-preview--screenshots)
-  - [Authentication Portal](#1-authentication-portal)
-  - [Executive Clinical Dashboard](#2-executive-clinical-dashboard)
-  - [Patient Management System (PIMS)](#3-patient-management-system-pims)
-  - [Consultation & Appointment Scheduling](#4-consultation--appointment-scheduling)
-  - [Clinical Roster & Roadmap Previews](#5-clinical-roster--roadmap-previews)
-  - [Responsive Mobile Experience](#6-responsive-mobile-experience)
-- [Key Features](#key-features)
+  - [1. Authentication Portal](#1-authentication-portal)
+  - [2. Executive Clinical Dashboard](#2-executive-clinical-dashboard)
+  - [3. Patient Management System (PIMS)](#3-patient-management-system-pims)
+  - [4. Consultation & Appointment Scheduling](#4-consultation--appointment-scheduling)
+  - [5. Clinical Roster & Administration Previews](#5-clinical-roster--administration-previews)
+  - [6. Responsive Mobile Experience](#6-responsive-mobile-experience)
+- [Feature Status: Implemented vs. Planned](#feature-status-implemented-vs-planned)
+  - [Currently Implemented (Verified MVP)](#currently-implemented-verified-mvp)
+  - [Planned / Coming Soon](#planned--coming-soon)
+- [Future Roadmap: Patient Portal & Digital Healthcare Experience](#future-roadmap-patient-portal--digital-healthcare-experience)
+  - [A. Patient Registration and Authentication](#a-patient-registration-and-authentication)
+  - [B. Book Appointments From Home](#b-book-appointments-from-home)
+  - [C. Personalized Patient Dashboard](#c-personalized-patient-dashboard)
+  - [D. Doctor Discovery and Availability](#d-doctor-discovery-and-availability)
+  - [E. Notifications and Reminders](#e-notifications-and-reminders)
+  - [F. Online Consultation — Future Telehealth Extension](#f-online-consultation--future-telehealth-extension)
+  - [G. Patient Records and Medical History](#g-patient-records-and-medical-history)
+  - [H. Appointment Management for Healthcare Providers](#h-appointment-management-for-healthcare-providers)
+  - [I. Future Payments — Optional Enhancement](#i-future-payments--optional-enhancement)
+  - [Proposed Patient Appointment Booking Flowchart](#proposed-patient-appointment-booking-flowchart)
 - [Technology Stack](#technology-stack)
 - [System Architecture & Data Flow](#system-architecture--data-flow)
 - [Database & Data Models](#database--data-models)
@@ -48,7 +64,7 @@
 - [Security & Compliance](#security--compliance)
 - [Production Deployment](#production-deployment)
 - [Troubleshooting & FAQs](#troubleshooting--faqs)
-- [Strategic Roadmap](#strategic-roadmap)
+- [Strategic Platform Milestones](#strategic-platform-milestones)
 - [Contributing](#contributing)
 - [License & Author](#license--author)
 
@@ -56,41 +72,51 @@
 
 ## Overview
 
-**MediCore** is a modern, full-stack hospital and healthcare administrative platform engineered to streamline clinical scheduling, patient intake, dossier records, and operational analytics. Built as a high-reliability Admin MVP, it solves the acute administrative bottleneck faced by clinics and outpatient departments: fragmented patient histories, scheduling conflicts, slow lookups, and fragile local database setups.
+### Vision & Purpose
+**MediCore** is a modern healthcare management platform engineered to simplify clinical administration, reduce scheduling overhead, and bridge the digital divide between patients and healthcare providers.
 
-### Problem It Solves
-Traditional clinic management systems are either antiquated on-premise desktop software or prohibitively complex enterprise suites. MediCore bridges this gap with:
-1. **Frictionless Onboarding**: A zero-configuration embedded database fallback (`MongoMemoryServer`) that lets evaluators and developers run the full system immediately without installing local database daemons.
-2. **Instant Clinical Visibility**: Real-time KPI aggregation and weekly consultation volume analytics powered by Recharts.
-3. **Data Integrity & Safety**: Multi-field debounced patient search, automated patient code generation (`P001`, `P002`...), schema-level validation, and two-step modal deletion safeguards with relational cascade cleanup.
-4. **Relational Scheduling Engine**: Direct relational linking between patients, clinical specialists, time slots, and consultation statuses with immediate state progression tracking.
+At its core, MediCore’s vision is to make healthcare services **accessible, organized, and convenient** through digital technology. Modern outpatient care requires eliminating administrative fragmentation: patients should not need to travel to a clinic merely to book a consultation, and medical administrators should not rely on disparate spreadsheets or vulnerable paper dossiers. MediCore transforms clinical workflows into a unified, secure, and intuitive digital hub.
 
-### Target Audience
-- **Clinical Administrators & Practice Managers**: For daily patient intake, roster coordination, and consultation tracking.
-- **Outpatient Care Clinics**: Seeking a responsive, lightweight, cloud-ready management dashboard.
-- **Healthcare Software Engineers & Recruiters**: Evaluating modern TypeScript full-stack architecture, clean separation of concerns, and automated end-to-end verification.
+```
+       Healthcare Administration                     Patient Care Delivery
+  [Clinical Roster & KPI Analytics]  ◄─── MediCore ───►  [Home Booking & Consultations]
+```
+
+### The Problem MediCore Solves
+Healthcare facilities operate in high-tempo environments where administrative friction directly degrades patient care. MediCore tackles the critical failure points of traditional management:
+
+1. **Eliminating Zero-Setup Blockers**: Traditional enterprise software requires complex on-premise infrastructure. MediCore features an intelligent dual-engine architecture: it connects directly to production **MongoDB Atlas** or local databases, while providing a transparent in-memory fallback (`MongoMemoryServer`) that lets evaluators launch the complete system immediately without installing database daemons.
+2. **Eliminating In-Person Scheduling Inefficiencies**: Patients traditionally endure long telephone queues or in-person visits to book consultations. MediCore’s architecture supports structured digital scheduling with real-time doctor availability checks.
+3. **Preventing Medical Record Fragmentation**: Patient data is centralized into structured dossiers containing contact details, calculated age, demographic records, emergency contacts, and medical alerts.
+4. **Enforcing Relational Integrity & Safeguards**: Relational Mongoose references connect patients directly with attending physicians, featuring automatic cascade cleanup upon patient record deletion and two-step modal confirmation guards.
+
+### Target Users & Stakeholders
+- **Clinical Administrators & Medical Receptionists**: Manage daily patient intake, oversee calendar schedules, monitor waiting room statuses, and track KPI metrics.
+- **Attending Physicians & Specialists**: View daily consultation agendas, inspect demographic and clinical dossiers, and transition consultation statuses.
+- **Patients (Future Digital Portal)**: Discover specialists, view verified credentials, book consultations from home, access appointments, and receive automated reminders.
+- **Healthcare Technical Recruiters & Engineers**: Evaluating modern full-stack TypeScript architecture, resilient dual-database persistence, and automated Playwright verification.
 
 ---
 
 ## Application Preview & Screenshots
 
-All 15 screenshots showcased below are captured directly from the live, running application via automated high-resolution Playwright runs (`deviceScaleFactor: 2`, 1440×900 desktop and 390×844 mobile viewports).
+All 15 screenshots showcased below represent real, verified captures generated by automated Playwright runs (`deviceScaleFactor: 2`, 1440×900 desktop and 390×844 mobile viewports) directly against the live application.
 
 ### 1. Authentication Portal
 
-Secure administrative entry point featuring real-time form validation, credential verification, and an accessible password visibility toggle.
+Secure administrative gateway featuring real-time input validation, bcrypt credential verification, and an accessible Lucide eye visibility toggle.
 
 <p align="center">
-  <img src="screenshots/01-login.png" alt="MediCore Secure Login Portal" width="85%" style="border-radius: 8px; border: 1px solid #e2e8f0;" />
+  <img src="screenshots/01-login.png" alt="MediCore Secure Login Portal" width="85%" style="border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.08);" />
   <br />
-  <em>Figure 1: MediCore Login Screen featuring JWT credential authentication and accessible Lucide eye visibility toggle.</em>
+  <em>Figure 1: MediCore Administrative Authentication Portal featuring password toggle, JWT authorization, and preloaded demo credentials.</em>
 </p>
 
 ---
 
 ### 2. Executive Clinical Dashboard
 
-Central command center providing immediate situational awareness with live database metric counters, weekday consultation distributions, and today's consultation agenda.
+Operational overview providing real-time database counters, weekday consultation distributions, and today's consultation agenda.
 
 | Executive Clinical Dashboard | Operational View After Actions |
 | :---: | :---: |
@@ -101,7 +127,7 @@ Central command center providing immediate situational awareness with live datab
 
 ### 3. Patient Management System (PIMS)
 
-End-to-end patient lifecycle tracking including debounced multi-field searching (name, phone, patient code), gender filtering, detailed clinical dossiers with virtual age calculation, and validated record modification.
+End-to-end patient dossier lifecycle tracking including debounced multi-field searching, gender filtering, virtual age computation, and validated record intake.
 
 | Patient Directory & Search | Comprehensive Clinical Dossier |
 | :---: | :---: |
@@ -125,16 +151,16 @@ Relational scheduling connecting patients to specialist doctors with date constr
 | <sub><b>Figure 4A:</b> Appointments table with status filters, date selection, and quick action controls.</sub> | <sub><b>Figure 4B:</b> Scheduling modal linking registered patients with active clinical specialists.</sub> |
 
 <p align="center">
-  <img src="screenshots/09-appointment-details.png" alt="Consultation Dossier & Status Lifecycle" width="85%" style="border-radius: 8px; border: 1px solid #e2e8f0;" />
+  <img src="screenshots/09-appointment-details.png" alt="Consultation Dossier & Status Lifecycle" width="85%" style="border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.08);" />
   <br />
   <em>Figure 4C: Detailed consultation dossier displaying populated doctor specialty, patient demographics, and 1-click status lifecycle controls.</em>
 </p>
 
 ---
 
-### 5. Clinical Roster & Roadmap Previews
+### 5. Clinical Roster & Administration Previews
 
-Architected for future enterprise scaling: active seeded medical specialists alongside clearly demarcated roadmap previews for Phase 2 credentialing and HIPAA configuration.
+Architected for future enterprise expansion: active seeded medical specialists alongside clearly demarcated roadmap previews for Phase 2 credentialing and HIPAA configuration.
 
 | Active Doctor Roster (Phase 2 Preview) | System Settings & Audit (Phase 2 Preview) |
 | :---: | :---: |
@@ -145,7 +171,7 @@ Architected for future enterprise scaling: active seeded medical specialists alo
 
 ### 6. Responsive Mobile Experience
 
-Engineered with mobile-first Tailwind CSS breakpoints (`sm`, `md`, `lg`, `xl`), providing seamless usability for clinical staff on tablets and mobile devices.
+Engineered with mobile-first Tailwind CSS breakpoints (`sm`, `md`, `lg`, `xl`), providing clinical staff with seamless usability on tablets and mobile devices.
 
 | Mobile Dashboard | Mobile Patient Directory | Mobile Appointments Roster |
 | :---: | :---: | :---: |
@@ -154,49 +180,227 @@ Engineered with mobile-first Tailwind CSS breakpoints (`sm`, `md`, `lg`, `xl`), 
 
 ---
 
-## Key Features
+## Feature Status: Implemented vs. Planned
 
-### Implemented & Verified Capabilities
+MediCore clearly distinguishes between functionality verified in the existing codebase and planned roadmap modules.
 
-- **Role-Based Authentication & Guarded Routes**:
-  - Encrypted credential verification utilizing `bcryptjs` (10 salt rounds).
+### Currently Implemented (Verified MVP)
+
+The current implementation is an **Admin-focused Healthcare Management MVP** delivering verified core capabilities:
+
+- [x] **Secure Administrator Authentication**:
+  - `bcryptjs` salt hashing (10 rounds) for password storage.
   - Stateless JSON Web Tokens (`jsonwebtoken`) with 7-day expiration.
-  - Client-side route protection via React Router `<ProtectedRoute>` wrapping layout components.
-  - Automatic session teardown and token clearance upon `401 Unauthorized` responses.
-  - Interactive password visibility toggling (`Eye` / `EyeOff`) with accessible ARIA labeling.
+  - Client-side `<ProtectedRoute>` route wrapper.
+  - Automatic session cleanup and redirect to `/login` upon HTTP `401 Unauthorized`.
+  - Accessible password visibility toggle (`Eye`/`EyeOff`).
+  - *(Visualized in [Figure 1](screenshots/01-login.png))*
+- [x] **Executive KPI Analytics & Agenda Dashboard**:
+  - Real-time database counters (Total Patients, Today's Scheduled Appointments, Total Doctors, Pending Consultations).
+  - Weekly appointment volume bar chart using `recharts`.
+  - Today's consultation agenda with status indicators.
+  - *(Visualized in [Figure 2A & 2B](screenshots/02-dashboard.png))*
+- [x] **Patient Information Management System (PIMS)**:
+  - Full CRUD operations with Mongoose schema validation.
+  - Automatic sequential patient code generator (`P001`, `P002`...).
+  - Multi-field debounced query against name, phone, email, and ID code.
+  - Demographic filtering by gender.
+  - Computed virtual `age` field automatically derived from `dateOfBirth`.
+  - Two-step deletion modal guard with relational cascade cleanup of associated appointments.
+  - *(Visualized in [Figures 3A, 3B, 3C, 3D](screenshots/03-patients-list.png))*
+- [x] **Relational Consultation & Appointment Scheduler**:
+  - Relational joins connecting `Patient` and `Doctor` document references.
+  - Past-date scheduling guard preventing appointments in past calendar dates.
+  - 1-click status transitions (`Pending` ➔ `Confirmed` ➔ `Completed` ➔ `Cancelled`).
+  - Filter and query appointments by doctor, patient, status, and calendar date.
+  - *(Visualized in [Figures 4A, 4B, 4C](screenshots/07-appointments-list.png))*
+- [x] **Dual-Engine Database Architecture**:
+  - Direct connection to MongoDB Atlas or local MongoDB via `MONGODB_URI`.
+  - Automatic zero-configuration fallback to an embedded in-memory database (`mongodb-memory-server`) if external MongoDB is unreachable.
+  - Startup database auto-seeder (`seed.ts`) populating administrator credentials, 5 clinical doctors, 10 patients, and 12 relational appointments.
+- [x] **Responsive Mobile Layout**:
+  - Full touch-friendly responsive interface optimized for desktop, tablet, and mobile clinical viewports.
+  - *(Visualized in [Figures 6A, 6B, 6C](screenshots/12-responsive-mobile-dashboard.png))*
 
-- **Executive Analytics & KPI Dashboard**:
-  - Live database counters: Total Patients, Today's Scheduled Appointments, Total Doctors, and Pending Consultations.
-  - Interactive Weekly Volume Bar Chart powered by `recharts`.
-  - Today's Consultation Agenda table with instantaneous status indicators.
-  - One-click shortcuts for rapid patient intake and appointment booking.
+### Planned / Coming Soon
 
-- **Comprehensive Patient Management (PIMS)**:
-  - Full CRUD operations with server-enforced validation schemas.
-  - Debounced multi-field searching against `fullName`, `phone`, `email`, and `patientId`.
-  - Demographic filtering by gender (`All`, `Male`, `Female`, `Other`).
-  - Dynamic virtual age calculation dynamically derived from `dateOfBirth`.
-  - Two-step deletion confirmation modal with cascading cleanup of associated appointment records.
+The following capabilities represent the planned product vision:
 
-- **Relational Appointment Scheduling**:
-  - Relational population linking Mongoose `Patient` and `Doctor` schemas.
-  - Validation rules guarding against scheduling appointments in past dates.
-  - One-click lifecycle state transitions (`Pending` ➔ `Confirmed` ➔ `Completed` ➔ `Cancelled`).
-  - Search and filter appointments by patient name, doctor name, status, or consultation date.
+- [ ] **Patient Portal & Registration**: Self-service registration, patient login, and profile management.
+- [ ] **Online Appointment Booking From Home**: Direct booking by patients without visiting the clinic.
+- [ ] **Doctor Discovery & Real-Time Availability**: Patient-facing search by specialty, physician, and open slots.
+- [ ] **Personalized Patient Dashboard**: Patient view of upcoming consultations, past history, and booking status.
+- [ ] **Automated Booking Confirmations & Reminders**: Multi-channel notifications via email, SMS, and in-app alerts.
+- [ ] **Self-Service Rescheduling & Cancellation**: Managed within healthcare-provider cancellation rules.
+- [ ] **Online Consultations & Telehealth**: WebRTC virtual consultations for remote clinical care.
+- [ ] **Secure Medical History & Document Access**: Patient access to prescriptions, doctor notes, and diagnostic reports.
+- [ ] **Digital Payments & Receipts**: Optional integrated appointment booking deposits and invoice payments.
 
-- **Resilient Dual-Engine Persistence**:
-  - Primary connection to MongoDB / MongoDB Atlas via `MONGODB_URI`.
-  - Automatic zero-configuration fallback to an embedded in-memory database (`mongodb-memory-server`) if external MongoDB is unreachable or unconfigured.
-  - Automated startup seeding (`seed.ts`) populating default administrator accounts, 5 medical specialists, 10 patients, and 12 relational appointments.
+---
 
-### Planned Modules (Roadmap Preview)
+## Future Roadmap: Patient Portal & Digital Healthcare Experience
 
-- **Phase 2 — Doctor & Staff Portal**: Physician self-service scheduling, leave requests, and digital credentials.
-- **Phase 3 — Telehealth Consultations**: End-to-end encrypted WebRTC video calls with real-time clinical notes.
-- **Phase 4 — Inpatient (IPD) Ward Management**: Bed occupancy matrices, ward admission/discharge, and triage workflows.
-- **Phase 5 — Electronic Prescriptions (e-Rx)**: Formulary integration, drug-drug interaction alerts, and dispensing tracking.
-- **Phase 6 — Medical Billing & Claims**: ICD-10/CPT coding engines, automated invoice generation, and insurance claims.
-- **Phase 7 — EHR / FHIR Interoperability**: Bi-directional integration with Epic, Cerner, and HL7 FHIR v4 endpoints.
+> [!IMPORTANT]
+> **Roadmap Notice**: The modules in this section represent the architectural design for MediCore’s upcoming releases. All capabilities described here are **Planned** or **Coming Soon** and build upon the existing data models and API foundation.
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        MediCore Digital Ecosystem                      │
+│                                                                        │
+│   ┌────────────────────────┐             ┌─────────────────────────┐   │
+│   │   Admin & Staff MVP    │             │  Patient Portal (Phase 2)│  │
+│   │  [CURRENTLY LIVE]      │             │  [PLANNED / COMING SOON]│   │
+│   │ • Executive Dashboard  │             │ • Home Booking Engine   │   │
+│   │ • Patient Records CRUD │   REST API  │ • Doctor Discovery      │   │
+│   │ • Relational Calendar  │◄───────────►│ • Personal Dashboard    │   │
+│   │ • Doctor Roster        │             │ • Automated Reminders   │   │
+│   │ • In-Memory Fallback   │             │ • Teleconsultation Links│   │
+│   └────────────────────────┘             └─────────────────────────┘   │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+### A. Patient Registration and Authentication
+*Status: Planned / Upcoming Release*
+
+A dedicated patient-facing authentication module expanding upon MediCore's existing JWT infrastructure:
+- **Self-Service Registration**: Patients create an account with email verification, phone validation, and basic demographic intake.
+- **Secure Sign-In & Session Isolation**: Dedicated patient role (`UserRole: 'PATIENT'`) strictly guarded so patients cannot access administrative endpoints (`/api/dashboard`, `/api/patients`).
+- **Profile Management**: Patients can update emergency contacts, residential addresses, and notification preferences.
+- **Self-Service Password Recovery**: Secure, time-limited tokenized email recovery links.
+- **Privacy & Consent Controls**: Granular consent settings for data processing and notification preferences in compliance with health data privacy guidelines.
+
+### B. Book Appointments From Home
+*Status: Planned / Upcoming Release*
+
+The core pillar of MediCore’s digital expansion: enabling patients to arrange outpatient consultations from the comfort of their homes without having to visit the clinic or wait in telephone queues.
+
+#### The 8-Step Home Booking Workflow
+1. **Portal Authentication**: Patient logs into the MediCore Patient Portal from any desktop, tablet, or smartphone.
+2. **Search Doctors or Specialties**: Patient selects a medical specialty (e.g., Cardiology, Orthopedics, Pediatrics) or searches for a specific physician.
+3. **Inspect Provider Credentials & Open Slots**: Patient views the physician’s verified bio, qualifications, clinic room, and real-time open calendar slots.
+4. **Select Date & Time**: Patient selects an open appointment date and specific consultation window.
+5. **Choose Consultation Mode**: Patient selects between an **In-Person Clinic Visit** or a **Virtual Online Consultation** (if supported by the provider).
+6. **Enter Clinical Context & Confirm**: Patient enters the primary reason for consultation, notes any acute symptoms, and reviews booking terms.
+7. **Instant Booking Confirmation**: The system checks slot concurrency, reserves the slot, and generates an official appointment confirmation with a unique reference number (`APT-XXXX`).
+8. **Dashboard & Notification Sync**: The consultation appears immediately in the patient’s personalized dashboard, synchronizes with the clinic’s master calendar, and dispatches a confirmation notice.
+
+> [!TIP]
+> **Conflict Prevention Engine**: The booking service will enforce atomic slot locking to prevent race conditions and double-booking between concurrent patient requests.
+
+### C. Personalized Patient Dashboard
+*Status: Planned / Upcoming Release*
+
+A dedicated, patient-tailored dashboard delivering complete clarity over their care schedule:
+- **Upcoming Consultations Card**: Chronological list of confirmed consultations displaying date, time, doctor name, clinic room, or virtual consultation link.
+- **Consultation History**: Historical archive of completed and past visits with attending doctors.
+- **Real-Time Booking Status**: Color-coded status badges (`Pending Provider Review`, `Confirmed`, `Completed`, `Rescheduled`, `Cancelled`).
+- **Self-Service Rescheduling & Cancellation**: Permitted within clinic policy constraints (e.g., rescheduling permitted up to 24 hours prior to the slot).
+- **Authorized Document Access**: Downloadable appointment confirmation slips and physician-approved visit summaries.
+
+### D. Doctor Discovery and Availability
+*Status: Planned / Upcoming Release*
+
+A patient-friendly physician directory building on MediCore’s existing seeded doctor roster:
+- **Specialty Filtering**: Filter providers across Cardiology, General Medicine, Neurology, Orthopedics, Pediatrics, and Dermatology.
+- **Doctor Profile Dossiers**: View qualifications, clinical focus, languages spoken, and clinic hours.
+- **Real-Time Availability Calendar**: Calendar view displaying only genuinely open appointment slots, automatically excluding booked slots, doctor leave, and non-working hours.
+- **Consultation Type Badges**: Clear visual indicators denoting whether a specialist accepts in-person visits, teleconsultations, or both.
+
+### E. Notifications and Reminders
+*Status: Planned / Multi-Channel Pipeline*
+
+Automated notifications to minimize clinic no-shows and keep patients informed:
+- **Immediate Booking Confirmation**: Dispatched immediately upon successful reservation with the consultation reference code.
+- **Provider Status Updates**: Notifies the patient if a clinic adjusts the consultation time or updates the status to `Confirmed`.
+- **24-Hour & 2-Hour Appointment Reminders**: Scheduled reminders to ensure patients arrive on time or connect to their virtual room.
+- **Cancellation / Reschedule Notices**: Instant confirmation whenever a consultation is altered.
+- *Delivery Channels (Planned)*: In-app notification center, transactional email (via SendGrid/AWS SES), and optional SMS alerts.
+
+### F. Online Consultation — Future Telehealth Extension
+*Status: Planned / Telehealth Extension*
+
+A remote clinical consultation extension for patients who cannot travel or prefer remote follow-ups:
+- **Secure Telehealth Scheduling**: Patients filter specifically for virtual slots.
+- **One-Click Virtual Consultation Link**: Unique, end-to-end encrypted WebRTC room link generated alongside the appointment confirmation.
+- **Consultation Status Synchronization**: Doctor and patient connect to the virtual room; completion transitions the appointment status to `Completed`.
+- **Protected Virtual Records**: Telehealth access tokens expire immediately following consultation completion.
+
+### G. Patient Records and Medical History
+*Status: Planned / Sensitive Health Data Architecture*
+
+A secure clinical record repository enabling authorized patients to access their health records:
+- **Consultation Summaries**: Doctor-approved notes summarizing the outcome of visits.
+- **Digital Prescriptions (e-Rx)**: Electronic prescriptions detailing medication name, dosage, frequency, and instructions.
+- **Diagnostic Report Repository**: View laboratory and imaging reports uploaded by clinical staff.
+- **Strict Clinical Integrity Controls**: Official medical records, diagnoses, and prescriptions are strictly read-only for patients and can only be authored or amended by licensed clinical providers.
+- **Healthcare Privacy Architecture**: All health records are architected around strict authorization guards, field-level encryption, access audit logging, and data minimization principles.
+
+### H. Appointment Management for Healthcare Providers
+*Status: Planned / Provider Workflow Integration*
+
+Seamless bi-directional integration between the Patient Portal and MediCore’s existing administrative scheduler:
+- **Review Incoming Requests**: Providers and receptionists can review online patient requests, confirm bookings, or suggest alternative times.
+- **Availability Management**: Doctors can toggle working hours, mark vacation leave, and dynamically block unavailable time slots.
+- **Unified Master Calendar**: Synchronizes bookings made by administrative receptionists and home bookings made by patients into a single consolidated agenda.
+- **Patient Dossier Linking**: Online bookings link directly to existing patient dossiers or trigger verified intake for first-time visitors.
+
+### I. Future Payments — Optional Enhancement
+*Status: Optional / Planned Extension*
+
+An optional payment processing extension for clinics that require consultation deposits:
+- **Digital Payment Processing**: Support for credit/debit cards, UPI, or digital wallets via standard payment gateways (Stripe/Razorpay).
+- **Automated Invoices & Receipts**: Instant PDF receipts with consultation reference numbers.
+- **Refund Policy Enforcement**: Automated refund handling when appointments are cancelled within provider policy windows.
+- *Note: Payment integrations are strictly planned and optional; no live financial credentials are configured.*
+
+---
+
+### Proposed Patient Appointment Booking Flowchart
+
+The Mermaid diagram below visualizes the proposed end-to-end patient booking journey from portal authentication to post-booking reminders:
+
+```mermaid
+flowchart TD
+    subgraph Step1 ["1. Portal Entry & Security"]
+        A["Patient Accesses MediCore Portal"] --> B{"Authenticated?"}
+        B -->|"No"| C["Patient Sign-Up / Secure Login"]
+        C --> D["Issue Secure Patient JWT Session"]
+        B -->|"Yes"| D
+    end
+
+    subgraph Step2 ["2. Provider Discovery"]
+        D --> E["Search by Specialty / Doctor Name"]
+        E --> F["Browse Verified Doctor Profiles"]
+        F --> G["Inspect Real-Time Available Slots"]
+    end
+
+    subgraph Step3 ["3. Slot Selection & Consultation Mode"]
+        G --> H["Select Date & Time Window"]
+        H --> I{"Select Consultation Mode"}
+        I -->|"In-Person Visit"| J1["Clinic Visit Selected"]
+        I -->|"Teleconsultation"| J2["Virtual Video Consultation Selected"]
+    end
+
+    subgraph Step4 ["4. Clinical Intake & Confirmation"]
+        J1 & J2 --> K["Enter Consultation Reason & Symptoms"]
+        K --> L["System Performs Atomic Concurrency Check"]
+        L --> M["Confirm Booking & Generate Reference ID (APT-XXXX)"]
+    end
+
+    subgraph Step5 ["5. Post-Booking Engagement"]
+        M --> N["Update Patient Dashboard (Upcoming Agenda)"]
+        M --> O["Sync Clinic Master Schedule (Admin/Doctor View)"]
+        M --> P["Dispatch Confirmation (Email / SMS / In-App)"]
+        N --> Q["Automated Reminders (24h / 2h Pre-Visit)"]
+        N --> R["Self-Service Reschedule / Cancel (Within Policy)"]
+    end
+
+    style Step1 fill:#f0f9ff,stroke:#0284c7,stroke-width:2px
+    style Step2 fill:#f8fafc,stroke:#475569,stroke-width:2px
+    style Step3 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Step4 fill:#fefce8,stroke:#ca8a04,stroke-width:2px
+    style Step5 fill:#faf5ff,stroke:#9333ea,stroke-width:2px
+```
 
 ---
 
@@ -394,18 +598,15 @@ erDiagram
 1. **User Schema (`User.ts`)**:
    - `email`: Indexed, unique, lowercase, trimmed.
    - `password`: Excluded by default (`select: false`), hashed before persistence via Mongoose pre-save hook.
-   - Role default: `'ADMIN'`.
-
+   - `role`: Enum constraint (`'ADMIN'`, `'DOCTOR'`, `'NURSE'`, `'PATIENT'`, `'RECEPTIONIST'`).
 2. **Patient Schema (`Patient.ts`)**:
    - `patientId`: Indexed, unique, sequentially formatted (`P001`, `P002`...).
    - `phone` & `fullName`: Indexed for rapid substring search regex.
-   - Virtual `age`: Calculated automatically from `dateOfBirth` relative to current system date on JSON/Object serialization.
+   - Virtual `age`: Calculated automatically from `dateOfBirth` relative to current system date on serialization.
    - Cascading Cleanup: Deleting a patient invokes `Appointment.deleteMany({ patient: patient._id })` before removing the dossier.
-
 3. **Doctor Schema (`Doctor.ts`)**:
    - `doctorId`: Unique identifier (`DOC001`, `DOC002`...).
    - `status`: Enum constraint (`'Active'`, `'On Leave'`, `'Inactive'`).
-
 4. **Appointment Schema (`Appointment.ts`)**:
    - `appointmentId`: Unique identifier (`APT-0001`, `APT-0002`...).
    - `patient` & `doctor`: Indexed `Schema.Types.ObjectId` references populated via Mongoose `.populate()`.
@@ -454,22 +655,6 @@ All protected endpoints require an HTTP header: `Authorization: Bearer <JWT_TOKE
 | `GET` | `/api/dashboard/stats` | Bearer Token | Live KPI counters (patients, appointments, doctors, pending) | _None_ |
 | `GET` | `/api/dashboard/today-appointments` | Bearer Token | List of consultations scheduled for today (or nearest 6 active) | _None_ |
 | `GET` | `/api/dashboard/appointment-statistics` | Bearer Token | Weekday breakdown of completed vs total appointments for chart | _None_ |
-
-<details>
-<summary>▶ View Sample KPI Stats Response</summary>
-
-```json
-{
-  "success": true,
-  "data": {
-    "totalPatients": 10,
-    "todaysAppointments": 3,
-    "totalDoctors": 5,
-    "pendingAppointments": 4
-  }
-}
-```
-</details>
 
 ---
 
@@ -776,9 +961,10 @@ npm run build
    - Two-step UI confirmation modal prevents accidental record destruction.
    - Deleting a patient triggers cascade cleanup to avoid orphaned appointment references in the database.
 
-6. **HIPAA Readiness Architecture**:
-   - Schema separation and field-level metadata prepared for audit trails.
-   - Centralized error handling prevents leaking internal stack traces or database connection strings to client responses.
+6. **Healthcare Privacy & Data Protection Considerations**:
+   - Schema separation and field-level metadata are structured for audit logging.
+   - Centralized error handling prevents leaking internal stack traces or database connection strings in responses.
+   - Future patient-facing modules (medical histories, diagnostic reports, and teleconsultations) must strictly comply with applicable healthcare data protection, privacy, and confidentiality regulations (e.g., HIPAA / GDPR).
 
 ---
 
@@ -851,17 +1037,18 @@ The client Axios response interceptor intercepts <code>401 Unauthorized</code> r
 
 ---
 
-## Strategic Roadmap
+## Strategic Platform Milestones
 
 ```mermaid
 timeline
     title MediCore Platform Expansion Milestones
     Phase 1 (Completed) : Admin MVP : Auth & Session Guarding : Executive Dashboard & KPIs : Patient Dossiers (PIMS) : Relational Scheduling : Automated Seed Engine
-    Phase 2 (In Development) : Physician & Staff Portal : Doctor Self-Service Rostering : Credential Verification : Clinical Audit Logging
-    Phase 3 (Planned) : Telehealth Engine : WebRTC Video Consultations : Live Clinical Note Scribing : Digital Prescriptions (e-Rx)
-    Phase 4 (Planned) : Inpatient (IPD) Ward Management : Bed Occupancy Matrix : Ward Admissions & Triage : Nurse Call System
-    Phase 5 (Planned) : Pharmacy & Medical Billing : ICD-10 & CPT Coding : Invoice Generation : Insurance Claims Processing
-    Phase 6 (Planned) : Enterprise Interoperability : HL7 FHIR v4 APIs : Epic & Cerner Integration : HIPAA Compliance Audit
+    Phase 2 (In Development) : Patient Portal : Home Appointment Booking : Doctor Discovery & Slots : Personalized Patient Dashboard : Automated Reminders
+    Phase 3 (Planned) : Physician Portal : Doctor Self-Service Rostering : Credential Verification : Clinical Audit Logging
+    Phase 4 (Planned) : Telehealth Engine : WebRTC Video Consultations : Live Clinical Note Scribing : Digital Prescriptions (e-Rx)
+    Phase 5 (Planned) : Inpatient (IPD) Ward Management : Bed Occupancy Matrix : Ward Admissions & Triage : Nurse Call System
+    Phase 6 (Planned) : Pharmacy & Medical Billing : ICD-10 & CPT Coding : Invoice Generation : Insurance Claims Processing
+    Phase 7 (Planned) : Enterprise Interoperability : HL7 FHIR v4 APIs : Epic & Cerner Integration : HIPAA Compliance Audit
 ```
 
 ---
