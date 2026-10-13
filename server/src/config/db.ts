@@ -4,9 +4,9 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 let mongoMemoryServer: MongoMemoryServer | null = null;
 
 /**
- * Connect to MongoDB with connection reuse and serverless optimization.
- * In serverless environments (Vercel), reuses existing warm connections
- * and prevents memory server spawning in production.
+ * Connect to MongoDB with connection reuse and environment optimization.
+ * In production, reuses existing connections and requires MONGODB_URI.
+ * In development, falls back to embedded MongoMemoryServer if local MongoDB is unavailable.
  */
 export const connectDB = async (): Promise<void> => {
   // 1. Connection reuse check: if already connected, return immediately
@@ -14,7 +14,7 @@ export const connectDB = async (): Promise<void> => {
     return;
   }
 
-  // If currently in the process of connecting, wait for it
+  // If currently in the process of connecting, await ready state
   if (mongoose.connection.readyState === 2) {
     console.log('MongoDB connection currently establishing, awaiting ready state...');
     await new Promise((resolve) => {
@@ -23,7 +23,7 @@ export const connectDB = async (): Promise<void> => {
     return;
   }
 
-  const isServerlessOrProd = Boolean(process.env.VERCEL || process.env.NODE_ENV === 'production');
+  const isProduction = process.env.NODE_ENV === 'production';
   let uri = process.env.MONGODB_URI?.trim();
 
   // 2. Primary connection attempt via MONGODB_URI
@@ -43,8 +43,8 @@ export const connectDB = async (): Promise<void> => {
     } catch (primaryErr: any) {
       console.warn('Initial connection attempt failed:', primaryErr?.message || primaryErr);
 
-      // Retry with IPv4 if localhost failed on Windows
-      if (uri.includes('localhost') && !isServerlessOrProd) {
+      // Retry with IPv4 if localhost failed on Windows during development
+      if (uri.includes('localhost') && !isProduction) {
         const ipv4Uri = uri.replace('localhost', '127.0.0.1');
         try {
           console.log(`Retrying connection with IPv4 (${ipv4Uri})...`);
@@ -60,22 +60,22 @@ export const connectDB = async (): Promise<void> => {
         }
       }
 
-      // If running on Vercel or in production, do NOT attempt to spawn MongoMemoryServer
-      if (isServerlessOrProd) {
+      // If running in production, do NOT attempt to spawn MongoMemoryServer
+      if (isProduction) {
         throw new Error(
-          `[MongoDB Atlas Error] Could not connect to MongoDB Atlas. ` +
+          `[MongoDB Atlas Error] Could not connect to MongoDB Atlas at the configured URI. ` +
           `Please check: ` +
-          `1) MONGODB_URI is configured correctly in Vercel environment variables. ` +
-          `2) MongoDB Atlas Network Access has '0.0.0.0/0' (Allow access from anywhere) enabled. ` +
+          `1) MONGODB_URI is configured correctly in server environment variables. ` +
+          `2) MongoDB Atlas Network Access whitelist permits incoming connections. ` +
           `3) Database user credentials and cluster status are active. ` +
           `Details: ${primaryErr?.message || primaryErr}`
         );
       }
     }
-  } else if (isServerlessOrProd) {
+  } else if (isProduction) {
     throw new Error(
-      `[Configuration Error] MONGODB_URI environment variable is missing in Vercel production environment. ` +
-      `Please configure MONGODB_URI in your Vercel Project Settings > Environment Variables.`
+      `[Configuration Error] MONGODB_URI environment variable is missing in production environment. ` +
+      `Please configure MONGODB_URI in your server environment variables.`
     );
   }
 

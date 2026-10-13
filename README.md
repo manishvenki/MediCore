@@ -881,9 +881,10 @@ On initial startup, MediCore's automatic database seeder initializes the clinica
 | :--- | :--- | :--- | :--- |
 | `PORT` | Number | `5000` | Port on which Express HTTP server listens |
 | `NODE_ENV` | String | `development` | Environment mode (`development` or `production`) |
-| `MONGODB_URI` | String | `mongodb://localhost:27017/medicore` | MongoDB connection URI. If unreachable, `MongoMemoryServer` starts automatically |
+| `MONGODB_URI` | String | `mongodb://localhost:27017/medicore` | MongoDB connection URI. In dev, falls back to `MongoMemoryServer` if unreachable |
 | `JWT_SECRET` | String | `medicore_super_secret_jwt_key_2026_demo` | Secret key used to sign and verify HMAC-SHA256 bearer tokens |
 | `CLIENT_URL` | String | `http://localhost:5173` | Trusted frontend origin for CORS policy |
+| `CORS_ORIGIN` | String | `http://localhost:5173` | Allowed origin for CORS (supports comma-separated list or wildcard `*`) |
 
 ### Client Configuration (`client/.env`)
 
@@ -969,40 +970,33 @@ npm run build
 ---
 
 ## Production Deployment
-
-### Frontend Deployment (Vercel / Netlify / Cloudflare Pages)
-
-1. Connect your repository to your hosting provider.
+ 
+### Frontend Deployment (Netlify / Cloudflare Pages / Static Hosting)
+ 
+1. Connect your repository to your frontend hosting provider.
 2. Configure build settings:
    - **Root Directory**: `client`
    - **Build Command**: `npm run build`
    - **Output Directory**: `dist`
-3. Add Environment Variable:
-   - `VITE_API_URL`: `https://your-backend-api.onrender.com/api`
-4. Set up client-side rewrite rule for single-page applications:
-   - **Vercel** (`client/vercel.json`):
-     ```json
-     {
-       "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-     }
-     ```
-   - **Netlify** (`client/_redirects`):
-     ```text
-     /*    /index.html   200
-     ```
-
-### Backend Deployment (Render / Railway / AWS / DigitalOcean)
-
-1. Connect repository with root directory set to `server`.
+3. Configure Environment Variable in your hosting dashboard:
+   - `VITE_API_URL`: `https://api.yourdomain.com/api` (URL of your deployed backend)
+4. Set up client-side SPA routing rewrite rule:
+   - **Netlify**: Ensure `/* /index.html 200` is configured in `client/public/_redirects` or site settings.
+   - **Cloudflare Pages / Others**: Enable Single-Page Application (SPA) fallback to `index.html`.
+ 
+### Backend Deployment (Docker / VPS / Render / Railway / AWS / PaaS)
+ 
+1. Deploy the `server` directory as a standalone Node.js service.
 2. Configure build and start commands:
    - **Build Command**: `npm install && npm run build`
    - **Start Command**: `npm start` (executes `node dist/server.js`)
-3. Configure Production Environment Variables:
-   - `PORT`: `5000` (or host assigned port)
+3. Configure Production Environment Variables in your hosting dashboard:
+   - `PORT`: `5000` (or provider-assigned `$PORT`)
    - `NODE_ENV`: `production`
    - `MONGODB_URI`: `mongodb+srv://<db_user>:<db_password>@cluster0.yourdomain.mongodb.net/medicore?retryWrites=true&w=majority`
    - `JWT_SECRET`: `<generated-secure-256-bit-token>`
-   - `CLIENT_URL`: `https://your-medicore-frontend.vercel.app`
+   - `CLIENT_URL`: `https://your-frontend-domain.com`
+   - `CORS_ORIGIN`: `https://your-frontend-domain.com`
 
 ---
 

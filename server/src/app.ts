@@ -36,13 +36,8 @@ app.use(
       // 3. Allow exact matches in configured origins
       if (allowedOriginsSet.has(origin)) return callback(null, true);
 
-      // 4. Allow any local development origin
+      // 4. Allow local development origins
       if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
-        return callback(null, true);
-      }
-
-      // 5. Allow Vercel preview and production deployments
-      if (origin.endsWith('.vercel.app')) {
         return callback(null, true);
       }
 
@@ -57,8 +52,8 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serverless Database Connection Middleware:
-// Ensures MongoDB Atlas connection is active before dispatching to controllers
+// Database Connection Middleware:
+// Ensures MongoDB connection is active before dispatching to controllers
 app.use(async (req: Request, res: Response, next: NextFunction) => {
   try {
     await connectDB();

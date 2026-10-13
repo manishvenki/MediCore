@@ -1,7 +1,33 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
-const rawApiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').trim().replace(/\/+$/, '');
-const API_BASE_URL = rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl}/api`;
+/**
+ * Resolves the API Base URL based on environment variables and runtime mode.
+ * - In local development: defaults to 'http://localhost:5000/api' if VITE_API_URL is unset.
+ * - In production: expects VITE_API_URL to be supplied by the hosting environment.
+ *   If missing in production, logs a clear diagnostic error and falls back to relative '/api'
+ *   rather than silently failing against localhost.
+ * - Always normalizes the URL to guarantee clean '/api' routing without duplicate path segments.
+ */
+const resolveApiBaseUrl = (): string => {
+  const envUrl = import.meta.env.VITE_API_URL?.trim();
+
+  if (envUrl) {
+    const sanitized = envUrl.replace(/\/+$/, '');
+    return sanitized.endsWith('/api') ? sanitized : `${sanitized}/api`;
+  }
+
+  if (import.meta.env.PROD) {
+    console.error(
+      '[MediCore Configuration Error]: VITE_API_URL environment variable is not defined in production. ' +
+      'Please configure VITE_API_URL in your hosting provider settings (e.g. https://api.yourdomain.com/api).'
+    );
+    return '/api';
+  }
+
+  return 'http://localhost:5000/api';
+};
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 const api = axios.create({
   baseURL: API_BASE_URL,
