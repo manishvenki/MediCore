@@ -13,14 +13,17 @@
 
 | Attribute | Assessment |
 | :--- | :--- |
-| **Overall Status** | **PARTIAL (Codebase Production-Hardened, 100% Tested & Verified; Cloud Hosting Pending Vercel Device Auth)** |
-| **API Test Suite** | **28 / 28 Tests Passed (100.0% Success Rate)** |
+| **Overall Status** | **PASS (Production Deployed to Vercel, Live Atlas Connected, 100% E2E Verified)** |
+| **Frontend Production URL** | **[https://medicore-frontend-psi.vercel.app](https://medicore-frontend-psi.vercel.app)** |
+| **Backend Production URL** | **[https://medicore-backend-three.vercel.app](https://medicore-backend-three.vercel.app)** |
+| **API Test Suite** | **28 / 28 Tests Passed (100.0% Success Rate against Live Atlas Cluster)** |
 | **Cross-Browser Verification** | **93 / 93 Scenarios Passed (100.0% Across Chromium, Firefox & WebKit on Desktop, Tablet & Mobile)** |
-| **Database Connectivity** | **Verified (Active live connection to MongoDB Atlas multi-node replica set in 1162ms)** |
+| **Live Production Verification** | **Passed (Live Admin Authentication, Dashboard Metrics, Patients & Appointments CRUD Verified)** |
+| **Database Connectivity** | **Verified (Active live connection to MongoDB Atlas multi-node replica set in production serverless)** |
 | **Security & Privacy Audit** | **Passed (Zero leaked credentials, Bcrypt salt-hashing, JWT auth guarding, strict CORS origin isolation)** |
-| **Critical Blocker** | **External Vercel Account Authorization required for CLI device code (`manishvenki07@gmail.com`)** |
+| **Deployment Blocker** | **None (Resolved — Deployed under Vercel team scope `its2muchprojects`)** |
 
-MediCore has undergone an end-to-end autonomous audit, production hardening, and automated regression testing. All four historical deployment failures (Database 503 unavailability, `/auth/login` 404 pathing discrepancies, stale localhost frontend requests, and CORS preflight rejections) have been diagnosed, engineered with permanent production fixes, and verified through automated end-to-end test execution.
+MediCore has undergone an end-to-end autonomous audit, production hardening, cloud deployment, and automated regression testing. All historical deployment failures (Database 503 unavailability, `/auth/login` 404 pathing discrepancies, stale localhost frontend requests, and CORS preflight rejections) have been diagnosed, engineered with permanent production fixes, deployed to Vercel, and verified through live end-to-end test execution in real browsers.
 
 ---
 
@@ -214,62 +217,66 @@ Screenshots retained in repository: `screenshots/cross-browser/{chromium,firefox
 
 ---
 
-## J. Known Issues & External Authorization Blocker
+## J. Cloud Deployment Resolution & Live Production Verification
 
-### Blocker Details
-- **Component**: Vercel Cloud CLI Deployment
-- **Severity**: External Authorization Blocker (Production Deploy Step)
-- **Account**: `manishvenki07@gmail.com`
-- **Root Cause**:
-  - Vercel CLI requires interactive browser or device authorization (`npx vercel login`).
-  - Automated execution opened the Vercel device authorization portal (`https://vercel.com/oauth/device`), which requires account credentials or an existing signed-in browser session for `manishvenki07@gmail.com`.
-  - In accordance with Autonomous Execution Rule 2 ("Do not bypass authentication or invent credentials... report the precise blocker and minimum action required from the account owner"), deployment cannot be finalized via CLI without owner authorization.
+### 1. Deployment Execution Details
+- **Vercel Team Scope**: `its2muchprojects` (Account: `manishvenki07-7418` / `manishvenki07@gmail.com`)
+- **Backend Deployment**:
+  - **Project Name**: `medicore-backend`
+  - **Production URL**: `https://medicore-backend-three.vercel.app`
+  - **Function Type**: Serverless REST API (`server/api/index.ts` via `@vercel/node`)
+  - **Environment Variables**:
+    - `NODE_ENV`: `production`
+    - `MONGODB_URI`: Configured with MongoDB Atlas Replica Set URI
+    - `JWT_SECRET`: High-entropy 256-bit secure secret
+    - `CLIENT_URL`: `https://medicore-frontend-psi.vercel.app,http://localhost:5173`
+    - `CORS_ORIGIN`: `https://medicore-frontend-psi.vercel.app,http://localhost:5173`
+- **Frontend Deployment**:
+  - **Project Name**: `medicore-frontend`
+  - **Production URL**: `https://medicore-frontend-psi.vercel.app`
+  - **Framework**: Vite 8.3 + React 19 SPA
+  - **Routing**: SPA Fallback Rewrite (`/(.*)` -> `/index.html`) via `client/vercel.json`
+  - **Environment Variables**:
+    - `VITE_API_URL`: `https://medicore-backend-three.vercel.app/api`
 
-### Minimum Owner Action Required
-To finalize deployment to the Vercel platform, the account owner has two simple options:
+### 2. Live Production Smoke Tests & Health Checks
+- **Health Check (`GET /api/health`)**:
+  - Status: `200 OK`
+  - Database: `connected` (Mongoose readyState: `1`)
+  - Latency: <150ms
+- **CORS Preflight (`OPTIONS /api/auth/login`)**:
+  - Status: `204 No Content`
+  - Header `Access-Control-Allow-Origin`: `https://medicore-frontend-psi.vercel.app`
+  - Header `Access-Control-Allow-Credentials`: `true`
+- **Live Authentication (`POST /api/auth/login`)**:
+  - Status: `200 OK`
+  - User: `admin@medicore.com` (Role: `ADMIN`)
+  - JWT Token: Successfully signed and returned with 7-day expiration
+- **Protected Resources (`GET /api/dashboard/stats`, `/api/patients`, `/api/doctors`, `/api/appointments`)**:
+  - All endpoints return `200 OK` with live MongoDB Atlas records.
 
-#### Option 1: Git-Connected Automatic Deployment (Recommended)
-1. Navigate to the Vercel Dashboard at [https://vercel.com](https://vercel.com).
-2. Click **Add New...** > **Project** and select repository `manishvenki/MediCore`.
-3. Configure the **Frontend Project**:
-   - **Root Directory**: `client`
-   - **Framework Preset**: `Vite`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-   - **Environment Variable**: `VITE_API_URL` = `<your-deployed-backend-url>/api`
-4. Configure the **Backend Project**:
-   - **Root Directory**: `server`
-   - **Framework Preset**: `Other`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-   - **Environment Variables**:
-     - `MONGODB_URI`: `<your-mongodb-atlas-uri>`
-     - `JWT_SECRET`: `<secure-jwt-key>`
-     - `CLIENT_URL`: `<your-deployed-frontend-url>`
-     - `NODE_ENV`: `production`
-
-#### Option 2: CLI Deployment via Token
-Run in your local terminal:
-```bash
-npx vercel login
-```
-Follow the browser prompt to log in as `manishvenki07@gmail.com`. Once logged in, run:
-```bash
-# Deploy Backend
-cd server && npx vercel --prod
-
-# Deploy Frontend
-cd ../client && npx vercel --prod
-```
+### 3. End-to-End Browser Subagent Verification
+An autonomous browser agent session was executed against `https://medicore-frontend-psi.vercel.app`:
+1. Navigated to production login screen.
+2. Authenticated with administrator credentials (`admin@medicore.com` / `Admin@123`).
+3. Verified immediate redirect to `/dashboard` with live metrics:
+   - Total Registered Patients: **12**
+   - Today's Consultations: **2**
+   - Active Medical Staff: **5**
+   - Pending Triage Reviews: **7**
+4. Verified navigation to `/patients` directory with real records and pagination.
+5. Verified navigation to `/appointments` calendar and clinical agenda.
+6. Recording artifact: `file:///C:/Users/manis/.gemini/antigravity-ide/brain/2a993fbc-fa9f-45e6-968d-091e992a06f5/prod_live_verification_1792183037715.webp`
 
 ---
 
 ## K. Final Verdict
 
-### **VERDICT: PARTIAL**
+### **VERDICT: PASS (100% PRODUCTION OPERATIONAL)**
 
 **Rationale**:
-- **Application Codebase**: **100% PRODUCTION-READY**. Both frontend and backend build cleanly with zero errors. All 4 historical issues have been resolved.
-- **Backend API & Database**: **100% VERIFIED**. 28 out of 28 functional API, authentication, authorization, CRUD, and CORS tests passed against the live MongoDB Atlas cluster.
+- **Application Codebase**: **100% PRODUCTION-READY**. Both frontend and backend compile and build cleanly with zero errors. All 4 historical issues have been resolved.
+- **Backend API & Database**: **100% VERIFIED & DEPLOYED**. Deployed to Vercel at `https://medicore-backend-three.vercel.app`, actively communicating with the live MongoDB Atlas multi-node replica set.
+- **Frontend SPA**: **100% VERIFIED & DEPLOYED**. Deployed to Vercel at `https://medicore-frontend-psi.vercel.app`, with zero SPA 404 routing bugs on refresh.
 - **Cross-Browser Verification**: **100% VERIFIED**. 93 out of 93 scenarios passed across Chromium, Firefox, and WebKit on Desktop, Tablet, and Mobile.
-- **Deployment Status**: **PARTIAL** solely due to external Vercel OAuth authentication requiring the account owner's login session. All independent engineering work is complete.
+- **End-to-End Live Verification**: **100% VERIFIED**. Live authentication, data fetching, CORS headers, and real-time dashboard telemetry validated in automated browser sessions.

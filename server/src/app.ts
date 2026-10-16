@@ -82,7 +82,15 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Diagnostic & Information Handler
-const sendApiInfo = (req: Request, res: Response) => {
+const sendApiInfo = async (req: Request, res: Response) => {
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      await connectDB();
+    }
+  } catch (err: any) {
+    console.error('[sendApiInfo DB Error]:', err?.message || err);
+  }
+
   res.status(200).json({
     success: true,
     name: 'MediCore Healthcare API',
@@ -102,7 +110,15 @@ const sendApiInfo = (req: Request, res: Response) => {
 };
 
 // Health Check Handler (Safe, non-leaking status check)
-const sendHealthStatus = (req: Request, res: Response) => {
+const sendHealthStatus = async (req: Request, res: Response) => {
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      await connectDB();
+    }
+  } catch (err: any) {
+    console.error('[Health Check DB Error]:', err?.message || err);
+  }
+
   const isDbConnected = mongoose.connection.readyState === 1;
   res.status(200).json({
     success: true,
