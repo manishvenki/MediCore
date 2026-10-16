@@ -29,6 +29,7 @@ MediCore has undergone an end-to-end autonomous audit, production hardening, and
 ### 1. Repository & Branch
 - **Repository**: [https://github.com/manishvenki/MediCore](https://github.com/manishvenki/MediCore)
 - **Branch**: `main`
+- **Deployment & Verification Commit Hash**: `f9591f8`
 - **Monorepo Architecture**:
   - `client/`: Single-Page Application built with React 19, TypeScript, Vite, Tailwind CSS, Lucide React, and Recharts.
   - `server/`: Enterprise REST API built with Express, TypeScript, Mongoose, and JSON Web Tokens.
@@ -199,6 +200,8 @@ Screenshots retained in repository: `screenshots/cross-browser/{chromium,firefox
 ## I. Git & Change Management History
 
 - **Current Branch**: `main`
+- **Verified Commit Hash**: `f9591f8` (`fix(deploy): harden production Vercel serverless, CORS isolation, and SPA routing with verified cross-browser test suite`)
+- **Remote Origin**: `https://github.com/manishvenki/MediCore.git` (Pushed and Synced)
 - **Tracked Configuration Files**:
   - `.env.example`
   - `client/.env.example`
