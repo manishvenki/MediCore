@@ -1,0 +1,276 @@
+{
+  "total": 28,
+  "passed": 28,
+  "failed": 0,
+  "results": [
+    {
+      "category": "Health",
+      "testName": "Root API Status (GET /)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "response": {
+        "success": true,
+        "name": "MediCore Healthcare API",
+        "version": "1.0.0",
+        "status": "operational",
+        "healthCheck": "/api/health",
+        "database": "connected",
+        "endpoints": {
+          "auth": "/api/auth",
+          "dashboard": "/api/dashboard",
+          "patients": "/api/patients",
+          "appointments": "/api/appointments",
+          "doctors": "/api/doctors"
+        },
+        "timestamp": "2026-10-16T19:56:04.873Z"
+      },
+      "latency": "69ms"
+    },
+    {
+      "category": "Health",
+      "testName": "API Endpoint Discovery (GET /api)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "endpoints": {
+        "auth": "/api/auth",
+        "dashboard": "/api/dashboard",
+        "patients": "/api/patients",
+        "appointments": "/api/appointments",
+        "doctors": "/api/doctors"
+      },
+      "latency": "7ms"
+    },
+    {
+      "category": "Health",
+      "testName": "Primary Health Check (GET /api/health)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "database": "connected",
+      "latency": "3ms"
+    },
+    {
+      "category": "Health",
+      "testName": "Alternative Health Check (GET /health)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "database": "connected",
+      "latency": "4ms"
+    },
+    {
+      "category": "Auth",
+      "testName": "Login with missing fields (POST /api/auth/login)",
+      "expectedStatus": 400,
+      "actualStatus": 400,
+      "pass": true,
+      "message": "Please provide both email and password."
+    },
+    {
+      "category": "Auth",
+      "testName": "Login with invalid credentials (POST /api/auth/login)",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "pass": true,
+      "message": "Invalid email or password credentials."
+    },
+    {
+      "category": "Auth",
+      "testName": "Login with valid credentials (POST /api/auth/login)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "userName": "MediCore Administrator",
+      "userRole": "ADMIN",
+      "hasToken": true,
+      "latency": "333ms"
+    },
+    {
+      "category": "Auth",
+      "testName": "Dual-Mount Login Without Prefix (POST /auth/login)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "hasToken": true
+    },
+    {
+      "category": "Auth",
+      "testName": "Access protected route without token (GET /api/auth/me)",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "pass": true,
+      "message": "Authentication token required. Please sign in."
+    },
+    {
+      "category": "Auth",
+      "testName": "Access protected route with invalid token (GET /api/auth/me)",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "pass": true,
+      "message": "Invalid or expired authentication token. Please sign in again."
+    },
+    {
+      "category": "Auth",
+      "testName": "Access protected route with valid token (GET /api/auth/me)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "user": {
+        "id": "6acdbe106a39727d2fe324a8",
+        "name": "MediCore Administrator",
+        "email": "admin@medicore.com",
+        "role": "ADMIN"
+      }
+    },
+    {
+      "category": "Doctors",
+      "testName": "Get active doctors catalog (GET /api/doctors)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "doctorsFound": 5,
+      "sampleDoctor": "Dr. David Lee"
+    },
+    {
+      "category": "Dashboard",
+      "testName": "Get executive KPI statistics (GET /api/dashboard/stats)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "stats": {
+        "totalPatients": 12,
+        "todaysAppointments": 2,
+        "totalDoctors": 5,
+        "pendingAppointments": 7
+      }
+    },
+    {
+      "category": "Dashboard",
+      "testName": "Get today's appointments schedule (GET /api/dashboard/today-appointments)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "count": 2
+    },
+    {
+      "category": "Dashboard",
+      "testName": "Get weekly appointment trends (GET /api/dashboard/appointment-statistics)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "daysCount": 7
+    },
+    {
+      "category": "Patients",
+      "testName": "List paginated patients (GET /api/patients)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "totalPatients": 12,
+      "returnedInPage": 5
+    },
+    {
+      "category": "Patients",
+      "testName": "Get patient dossier by ID (GET /api/patients/6acdbe116a39727d2fe324c5)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "fullName": "James Wilson",
+      "patientId": "P011"
+    },
+    {
+      "category": "Patients",
+      "testName": "Safe write: Create temporary patient record (POST /api/patients)",
+      "expectedStatus": 201,
+      "actualStatus": 201,
+      "pass": true,
+      "createdId": "6ad28158c3c209b2009239a6",
+      "assignedPatientId": "P013"
+    },
+    {
+      "category": "Patients",
+      "testName": "Safe update: Update temporary patient record (PUT /api/patients/:id)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "updatedName": "__TEST_AUTONOMOUS_VERIFICATION_PATIENT_UPDATED__"
+    },
+    {
+      "category": "Appointments",
+      "testName": "List paginated appointments (GET /api/appointments)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "totalAppointments": 17,
+      "returnedInPage": 5
+    },
+    {
+      "category": "Appointments",
+      "testName": "Safe write: Schedule temporary appointment (POST /api/appointments)",
+      "expectedStatus": 201,
+      "actualStatus": 201,
+      "pass": true,
+      "createdAptId": "6ad28159c3c209b2009239b4",
+      "assignedCode": "APT-0018"
+    },
+    {
+      "category": "Appointments",
+      "testName": "Safe update: Update temporary appointment (PUT /api/appointments/:id)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true,
+      "newStatus": "Pending"
+    },
+    {
+      "category": "Cleanup",
+      "testName": "Clean up temporary appointment (DELETE /api/appointments/:id)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true
+    },
+    {
+      "category": "Cleanup",
+      "testName": "Clean up temporary patient (DELETE /api/patients/:id)",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pass": true
+    },
+    {
+      "category": "CORS",
+      "testName": "Preflight OPTIONS request from authorized origin",
+      "expectedStatus": 204,
+      "actualStatus": 204,
+      "pass": true,
+      "Access-Control-Allow-Origin": "http://localhost:5173",
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,PATCH,OPTIONS"
+    },
+    {
+      "category": "CORS",
+      "testName": "Strict isolation: Reject unauthorized origin",
+      "expectedStatus": 500,
+      "actualStatus": 500,
+      "pass": true,
+      "originAllowed": false,
+      "note": "Unauthorized origin was correctly rejected by Access-Control-Allow-Origin policy"
+    },
+    {
+      "category": "Routing",
+      "testName": "API 404 catch-all handler (GET /api/non-existent-endpoint)",
+      "expectedStatus": 404,
+      "actualStatus": 404,
+      "pass": true,
+      "message": "API endpoint '/api/non-existent-endpoint' not found"
+    },
+    {
+      "category": "Routing",
+      "testName": "Universal 404 catch-all handler (GET /random-non-existent-path)",
+      "expectedStatus": 404,
+      "actualStatus": 404,
+      "pass": true,
+      "message": "API endpoint '/random-non-existent-path' not found"
+    }
+  ]
+}

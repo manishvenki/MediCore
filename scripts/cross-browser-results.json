@@ -1,0 +1,658 @@
+{
+  "total": 93,
+  "passed": 93,
+  "failed": 0,
+  "matrix": [
+    {
+      "browser": "Chromium",
+      "viewport": "Engine",
+      "testName": "Browser Engine Launch",
+      "pass": true,
+      "details": "Successfully launched"
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Unauthenticated Redirect to /login",
+      "pass": true,
+      "details": "URL: http://localhost:5173/login"
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Form Input & Data Binding",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Authentication & Transition to Dashboard",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Executive KPI Cards Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Patients Registry Navigation & Table Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Appointments Management Navigation & Schedule Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Deep-Link Nested Route Reload (SPA State Persistence)",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Desktop (1440x900)",
+      "testName": "No Critical Console Errors",
+      "pass": true,
+      "details": "0 errors"
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Desktop (1440x900)",
+      "testName": "No Failed Network Requests",
+      "pass": true,
+      "details": "0 network failures"
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Logout & Token Cleanup",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Unauthenticated Redirect to /login",
+      "pass": true,
+      "details": "URL: http://localhost:5173/login"
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Form Input & Data Binding",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Authentication & Transition to Dashboard",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Executive KPI Cards Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Patients Registry Navigation & Table Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Appointments Management Navigation & Schedule Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Deep-Link Nested Route Reload (SPA State Persistence)",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Tablet (768x1024)",
+      "testName": "No Critical Console Errors",
+      "pass": true,
+      "details": "0 errors"
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Tablet (768x1024)",
+      "testName": "No Failed Network Requests",
+      "pass": true,
+      "details": "0 network failures"
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Logout & Token Cleanup",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Mobile (390x844)",
+      "testName": "Unauthenticated Redirect to /login",
+      "pass": true,
+      "details": "URL: http://localhost:5173/login"
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Mobile (390x844)",
+      "testName": "Form Input & Data Binding",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Mobile (390x844)",
+      "testName": "Authentication & Transition to Dashboard",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Mobile (390x844)",
+      "testName": "Executive KPI Cards Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Mobile (390x844)",
+      "testName": "Patients Registry Navigation & Table Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Mobile (390x844)",
+      "testName": "Appointments Management Navigation & Schedule Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Mobile (390x844)",
+      "testName": "Deep-Link Nested Route Reload (SPA State Persistence)",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Mobile (390x844)",
+      "testName": "No Critical Console Errors",
+      "pass": true,
+      "details": "0 errors"
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Mobile (390x844)",
+      "testName": "No Failed Network Requests",
+      "pass": true,
+      "details": "0 network failures"
+    },
+    {
+      "browser": "Chromium",
+      "viewport": "Mobile (390x844)",
+      "testName": "Logout & Token Cleanup",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Engine",
+      "testName": "Browser Engine Launch",
+      "pass": true,
+      "details": "Successfully launched"
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Unauthenticated Redirect to /login",
+      "pass": true,
+      "details": "URL: http://localhost:5173/login"
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Form Input & Data Binding",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Authentication & Transition to Dashboard",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Executive KPI Cards Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Patients Registry Navigation & Table Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Appointments Management Navigation & Schedule Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Deep-Link Nested Route Reload (SPA State Persistence)",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Desktop (1440x900)",
+      "testName": "No Critical Console Errors",
+      "pass": true,
+      "details": "0 errors"
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Desktop (1440x900)",
+      "testName": "No Failed Network Requests",
+      "pass": true,
+      "details": "0 network failures"
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Logout & Token Cleanup",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Unauthenticated Redirect to /login",
+      "pass": true,
+      "details": "URL: http://localhost:5173/login"
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Form Input & Data Binding",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Authentication & Transition to Dashboard",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Executive KPI Cards Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Patients Registry Navigation & Table Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Appointments Management Navigation & Schedule Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Deep-Link Nested Route Reload (SPA State Persistence)",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Tablet (768x1024)",
+      "testName": "No Critical Console Errors",
+      "pass": true,
+      "details": "0 errors"
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Tablet (768x1024)",
+      "testName": "No Failed Network Requests",
+      "pass": true,
+      "details": "0 network failures"
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Logout & Token Cleanup",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Mobile (390x844)",
+      "testName": "Unauthenticated Redirect to /login",
+      "pass": true,
+      "details": "URL: http://localhost:5173/login"
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Mobile (390x844)",
+      "testName": "Form Input & Data Binding",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Mobile (390x844)",
+      "testName": "Authentication & Transition to Dashboard",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Mobile (390x844)",
+      "testName": "Executive KPI Cards Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Mobile (390x844)",
+      "testName": "Patients Registry Navigation & Table Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Mobile (390x844)",
+      "testName": "Appointments Management Navigation & Schedule Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Mobile (390x844)",
+      "testName": "Deep-Link Nested Route Reload (SPA State Persistence)",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Mobile (390x844)",
+      "testName": "No Critical Console Errors",
+      "pass": true,
+      "details": "0 errors"
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Mobile (390x844)",
+      "testName": "No Failed Network Requests",
+      "pass": true,
+      "details": "0 network failures"
+    },
+    {
+      "browser": "Firefox",
+      "viewport": "Mobile (390x844)",
+      "testName": "Logout & Token Cleanup",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Engine",
+      "testName": "Browser Engine Launch",
+      "pass": true,
+      "details": "Successfully launched"
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Unauthenticated Redirect to /login",
+      "pass": true,
+      "details": "URL: http://localhost:5173/login"
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Form Input & Data Binding",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Authentication & Transition to Dashboard",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Executive KPI Cards Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Patients Registry Navigation & Table Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Appointments Management Navigation & Schedule Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Deep-Link Nested Route Reload (SPA State Persistence)",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Desktop (1440x900)",
+      "testName": "No Critical Console Errors",
+      "pass": true,
+      "details": "0 errors"
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Desktop (1440x900)",
+      "testName": "No Failed Network Requests",
+      "pass": true,
+      "details": "0 network failures"
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Desktop (1440x900)",
+      "testName": "Logout & Token Cleanup",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Unauthenticated Redirect to /login",
+      "pass": true,
+      "details": "URL: http://localhost:5173/login"
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Form Input & Data Binding",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Authentication & Transition to Dashboard",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Executive KPI Cards Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Patients Registry Navigation & Table Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Appointments Management Navigation & Schedule Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Deep-Link Nested Route Reload (SPA State Persistence)",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Tablet (768x1024)",
+      "testName": "No Critical Console Errors",
+      "pass": true,
+      "details": "0 errors"
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Tablet (768x1024)",
+      "testName": "No Failed Network Requests",
+      "pass": true,
+      "details": "0 network failures"
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Tablet (768x1024)",
+      "testName": "Logout & Token Cleanup",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Mobile (390x844)",
+      "testName": "Unauthenticated Redirect to /login",
+      "pass": true,
+      "details": "URL: http://localhost:5173/login"
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Mobile (390x844)",
+      "testName": "Form Input & Data Binding",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Mobile (390x844)",
+      "testName": "Authentication & Transition to Dashboard",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Mobile (390x844)",
+      "testName": "Executive KPI Cards Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Mobile (390x844)",
+      "testName": "Patients Registry Navigation & Table Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Mobile (390x844)",
+      "testName": "Appointments Management Navigation & Schedule Render",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Mobile (390x844)",
+      "testName": "Deep-Link Nested Route Reload (SPA State Persistence)",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Mobile (390x844)",
+      "testName": "No Critical Console Errors",
+      "pass": true,
+      "details": "0 errors"
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Mobile (390x844)",
+      "testName": "No Failed Network Requests",
+      "pass": true,
+      "details": "0 network failures"
+    },
+    {
+      "browser": "WebKit",
+      "viewport": "Mobile (390x844)",
+      "testName": "Logout & Token Cleanup",
+      "pass": true,
+      "details": ""
+    }
+  ]
+}

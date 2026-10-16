@@ -2,10 +2,11 @@ import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
 let mongoMemoryServer: MongoMemoryServer | null = null;
+let cachedPromise: Promise<typeof mongoose> | null = null;
 
 /**
  * Connect to MongoDB with connection reuse and environment optimization.
- * In production, reuses existing connections and requires MONGODB_URI.
+ * In production/serverless, reuses existing connections and requires MONGODB_URI.
  * In development, falls back to embedded MongoMemoryServer if local MongoDB is unavailable.
  */
 export const connectDB = async (): Promise<void> => {
@@ -14,16 +15,20 @@ export const connectDB = async (): Promise<void> => {
     return;
   }
 
-  // If currently in the process of connecting, await ready state
+  // If currently in the process of connecting, await ready state or active promise
   if (mongoose.connection.readyState === 2) {
-    console.log('MongoDB connection currently establishing, awaiting ready state...');
+    if (cachedPromise) {
+      console.log('MongoDB connection currently establishing, awaiting cached promise...');
+      await cachedPromise;
+      return;
+    }
     await new Promise((resolve) => {
       mongoose.connection.once('connected', resolve);
     });
     return;
   }
 
-  const isProduction = process.env.NODE_ENV === 'production';
+  const isProductionOrServerless = process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
   let uri = process.env.MONGODB_URI?.trim();
 
   // 2. Primary connection attempt via MONGODB_URI
@@ -32,19 +37,22 @@ export const connectDB = async (): Promise<void> => {
       const sanitizedUri = uri.replace(/\/\/([^:]+):([^@]+)@/, '//$1:****@');
       console.log(`Connecting to MongoDB at: ${sanitizedUri} (db: medicore)...`);
 
-      await mongoose.connect(uri, {
+      cachedPromise = mongoose.connect(uri, {
         dbName: 'medicore',
-        serverSelectionTimeoutMS: 8000,
+        serverSelectionTimeoutMS: 10000,
         maxPoolSize: 10,
+        socketTimeoutMS: 45000,
       });
 
+      await cachedPromise;
       console.log('MongoDB connected successfully via MONGODB_URI.');
       return;
     } catch (primaryErr: any) {
+      cachedPromise = null;
       console.warn('Initial connection attempt failed:', primaryErr?.message || primaryErr);
 
       // Retry with IPv4 if localhost failed on Windows during development
-      if (uri.includes('localhost') && !isProduction) {
+      if (uri.includes('localhost') && !isProductionOrServerless) {
         const ipv4Uri = uri.replace('localhost', '127.0.0.1');
         try {
           console.log(`Retrying connection with IPv4 (${ipv4Uri})...`);
@@ -60,8 +68,8 @@ export const connectDB = async (): Promise<void> => {
         }
       }
 
-      // If running in production, do NOT attempt to spawn MongoMemoryServer
-      if (isProduction) {
+      // If running in production or serverless, do NOT attempt to spawn MongoMemoryServer
+      if (isProductionOrServerless) {
         throw new Error(
           `[MongoDB Atlas Error] Could not connect to MongoDB Atlas at the configured URI. ` +
           `Please check: ` +
@@ -72,7 +80,7 @@ export const connectDB = async (): Promise<void> => {
         );
       }
     }
-  } else if (isProduction) {
+  } else if (isProductionOrServerless) {
     throw new Error(
       `[Configuration Error] MONGODB_URI environment variable is missing in production environment. ` +
       `Please configure MONGODB_URI in your server environment variables.`
